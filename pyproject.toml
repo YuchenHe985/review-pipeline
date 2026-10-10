@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "reviewpipe"
+version = "1.0.0"
+description = "Reproducible review-analytics pipeline: contract-checked ingest, point-in-time features, leakage-safe evaluation"
+requires-python = ">=3.11"
+dependencies = [
+  "pyarrow>=15",
+  "duckdb>=1.1",
+  "pandas>=2.2",
+  "scikit-learn>=1.5",
+  "scipy>=1.11",
+  "xgboost>=2.1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[project.scripts]
+reviewpipe = "reviewpipe.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+ignore = ["E501"]  # the formatter wraps code; long strings and SQL stay readable
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
